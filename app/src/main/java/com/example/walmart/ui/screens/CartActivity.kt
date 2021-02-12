@@ -36,7 +36,7 @@ class CartActivity : AppCompatActivity(), RvCartAdapter.IRvCartAdapter {
         cartRecyclerView.adapter = adapter
 
 
-        val cartData: LiveData<List<ProductTable>> = viewModel.getCartDetails(application)
+        val cartData: LiveData<List<ProductTable>> = viewModel.getCartDetails()
         cartData.observe(this, Observer {
             adapter.update(it)
             if (cartData.value?.size == 0) {

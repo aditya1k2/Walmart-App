@@ -23,7 +23,7 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.ItemViewHolder>() {
         private val productName: TextView = itemView.findViewById(R.id.productName)
         private val brandName: TextView = itemView.findViewById(R.id.brandName)
         private val price: TextView = itemView.findViewById(R.id.price)
-        private val ratingBar : RatingBar = itemView.findViewById(R.id.ratingBarCategoryList)
+        private val ratingBar: RatingBar = itemView.findViewById(R.id.ratingBarCategoryList)
         fun bind(item: Items) {
             val a = "by ".plus("${item.brandName}")
             productName.text = item.name
@@ -32,10 +32,10 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.ItemViewHolder>() {
             Picasso.get().load(item.thumbnailImage)
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(productThumbnail)
-            if(item.customerRating==null)
+            if (item.customerRating == null)
                 ratingBar.visibility = View.GONE
             else
-            ratingBar.rating = item.customerRating
+                ratingBar.rating = item.customerRating
 
             itemView.setOnClickListener {
                 Toast.makeText(itemView.context, "Clicked ", Toast.LENGTH_SHORT).show()
@@ -43,17 +43,20 @@ class RvAdapter : RecyclerView.Adapter<RvAdapter.ItemViewHolder>() {
                 intent.putExtra("short description", item.shortDescription)
                 intent.putExtra("imageUrl", item.largeImage)
                 intent.putExtra("productPrice", item.salePrice)
-                intent.putExtra("productName",item.name)
-                intent.putExtra("brandName",item.brandName)
-                intent.putExtra("productRating",item.customerRating)
+                intent.putExtra("productName", item.name)
+                intent.putExtra("brandName", item.brandName)
+                intent.putExtra("productRating", item.customerRating)
                 itemView.context.startActivity(intent)
             }
         }
     }
 
     fun updateData(dat: List<Items>) {
-        this.dat.clear()
-        this.dat.addAll(dat)
+//        this.dat.clear()
+//        this.dat.addAll(dat)
+        for (itr in dat) {
+            this.dat.add(itr)
+        }
         notifyDataSetChanged()
     }
 

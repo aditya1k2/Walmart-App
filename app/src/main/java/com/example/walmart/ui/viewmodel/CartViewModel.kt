@@ -15,16 +15,13 @@ import kotlinx.coroutines.launch
 class CartViewModel : ViewModel() {
 
     private val cartUseCase = CartUseCase()
-    fun getCartDetails(application: Application): LiveData<List<ProductTable>> {
-        return cartUseCase.getCartDetails(application)
+    fun getCartDetails(): LiveData<List<ProductTable>> {
+        return cartUseCase.getCartDetails()
     }
+
     fun deleteProduct(product: ProductTable, application: Application) = viewModelScope.launch {
-        cartUseCase.delete(product, application)
+        cartUseCase.delete(product)
     }
-
-
-
-
 
 
 }

@@ -6,6 +6,7 @@ import android.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.walmart.R
 import com.example.walmart.ui.adapter.RvHomeAdapter
 import com.example.walmart.ui.viewmodel.HomeViewModel
@@ -22,7 +23,6 @@ class HomeActivity : MenuActivity() {
         val adapter = RvHomeAdapter()
         homeRecyclerView.layoutManager = LinearLayoutManager(this)
         homeRecyclerView.adapter = adapter
-
         homeViewModel.getCategoryList()
         homeViewModel.categoryListData.observe(this, Observer {
             shimmer_view_container_home.stopShimmerAnimation()

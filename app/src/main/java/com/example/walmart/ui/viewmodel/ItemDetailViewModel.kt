@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class ItemDetailViewModel : ViewModel() {
 
-    fun insertProduct(product: ProductTable, application: Application) = viewModelScope.launch {
-        WalmartRepository().insert(product, application)
+    fun insertProduct(product: ProductTable) = viewModelScope.launch {
+        WalmartRepository().insert(product)
     }
 }

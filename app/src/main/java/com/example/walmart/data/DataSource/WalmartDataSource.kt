@@ -3,12 +3,14 @@ package com.example.walmart.data.DataSource
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.walmart.data.networkfactory.ApiInterface
 import com.example.walmart.data.networkfactory.RetrofitFactory
 import com.example.walmart.model.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.coroutines.coroutineContext
 
 class WalmartDataSource {
 
@@ -35,34 +37,78 @@ class WalmartDataSource {
         return data
     }
 
-    fun callApiForCategoryListData(
+    suspend fun callApiForCategoryListData(
         catId: String?
-    ): LiveData<List<Items>> {
-        val data: MutableLiveData<List<Items>> = MutableLiveData()
+    ): CategoryListData {
+        val data: MutableLiveData<CategoryListData> = MutableLiveData()
         val retrofit = RetrofitFactory().getRetrofit()
-        retrofit.create(ApiInterface::class.java)
-            .getCategoryListData("json", catId, "tcefd9shdkvmqnq2b6657ra8")
-            .enqueue(object : Callback<CategoryListData> {
-                override fun onFailure(call: Call<CategoryListData>, t: Throwable) {
-                    Log.e("WalmartViewModelFail", t.localizedMessage)
-                }
 
-                override fun onResponse(
-                    call: Call<CategoryListData>,
-                    response: Response<CategoryListData>
-                ) {
-                    if (response.isSuccessful) {
-                        response.body()?.items?.let {
-                            data.value = it
-                        }
+        return RetrofitFactory().getRetrofit().create(ApiInterface::class.java)
+            .getCategoryListData("json", catId, "tcefd9shdkvmqnq2b6657ra8", 20, "","")
+
+//        retrofit.create(ApiInterface::class.java)
+//            .getCategoryListData("json", catId, "tcefd9shdkvmqnq2b6657ra8", 20,"")
+//            .enqueue(object : Callback<CategoryListData> {
+//                override fun onFailure(call: Call<CategoryListData>, t: Throwable) {
+//                    Log.e("WalmartViewModelFail", t.localizedMessage)
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<CategoryListData>,
+//                    response: Response<CategoryListData>
+//                ) {
+//                    if (response.isSuccessful) {
+//
+//                        response.body()?.let {
+//                            data.value = it
+//                        }
+//                        Log.d("WalmartViewModelSuccess", data.toString())
+//                    }
+//                }
+//            })
+//
+//        return data
+    }
+
+    suspend fun callApiForCategoryListDataPagination(
+        catId: String?,
+        lastDoc: String?,
+        remainingHits:String?
+
+    ): CategoryListData {
+        var data: CategoryListData?
 
 
-                        Log.d("WalmartViewModelSuccess", data.toString())
-                    }
-                }
-            })
+        return RetrofitFactory().getRetrofit().create(ApiInterface::class.java)
+            .getCategoryListData("json", catId, "tcefd9shdkvmqnq2b6657ra8", 20, lastDoc,remainingHits)
 
-        return data
+
+//        retrofit.create(ApiInterface::class.java)
+//            .getCategoryListDataPagination("json", catId, "tcefd9shdkvmqnq2b6657ra8", 20, path)
+//            .enqueue(object : Callback<CategoryListData> {
+//                override fun onFailure(call: Call<CategoryListData>, t: Throwable) {
+//                    Log.d("Pagination", "WalMart DataSource onFailure")
+//
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<CategoryListData>,
+//                    response: Response<CategoryListData>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        response.body().let {
+//                            data = it
+//                            Log.d(
+//                                "Pagination",
+//                                "WalMart DataSource OnResponse+${data.toString()}"
+//                            )
+//                        }
+//                    }
+//                }
+//            })
+
+//       return data
+
     }
 
 

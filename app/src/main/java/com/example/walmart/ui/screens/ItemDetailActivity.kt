@@ -49,6 +49,7 @@ class ItemDetailActivity : MenuActivity() {
         addToCart.setOnClickListener {
 
             cart_icon_counter_toolbar.visibility = View.VISIBLE
+            cart_icon_counter_toolbar.text = "3"
             viewModel.insertProduct(
                 ProductTable(
                     productNameDetailActivity,
@@ -56,7 +57,7 @@ class ItemDetailActivity : MenuActivity() {
                     brandName,
                     rating,
                     imageUrl
-                ), application
+                )
             )
         }
 

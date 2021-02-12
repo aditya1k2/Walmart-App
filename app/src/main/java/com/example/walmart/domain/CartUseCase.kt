@@ -8,12 +8,12 @@ import com.example.walmart.data.repository.WalmartRepository
 
 class CartUseCase {
     private val repository = WalmartRepository()
-    fun getCartDetails(application: Application): LiveData<List<ProductTable>> {
-        return repository.getAllProduct(application)
+    fun getCartDetails(): LiveData<List<ProductTable>> {
+        return repository.getAllProduct()
     }
 
-    suspend fun delete(product: ProductTable, application: Application) {
-        repository.delete(product,application)
+    suspend fun delete(product: ProductTable) {
+        repository.delete(product)
     }
 
 

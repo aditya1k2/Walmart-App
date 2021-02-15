@@ -9,21 +9,29 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.walmart.R
-import com.example.walmart.ui.adapter.RvAdapter
-import com.example.walmart.ui.viewmodel.WalmartViewModel
+import com.example.walmart.ui.adapter.RvCategoryListAdapter
+import com.example.walmart.ui.viewmodel.CategoryListViewModel
 import kotlinx.android.synthetic.main.activity_category_list.*
 
 class CategoryListActivity : MenuActivity() {
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(CategoryListViewModel::class.java)
+    }
 
     private var flag: Boolean = false
     private var isLoading: Boolean = true
-
-    //    private var viewThreshold: Int = 20
     private var scrollOut: Int = 0
     private var visibleItemCount: Int = 0
     private var totalItemCount: Int = 0
-    private var previousTotal: Int = 0
+
+    companion object {
+        private const val BUFFER_COUNT: Int = 5
+
+    }
+
     private val manager = LinearLayoutManager(this)
+    val adapter = RvCategoryListAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_list)
@@ -32,11 +40,10 @@ class CategoryListActivity : MenuActivity() {
         supportActionBar?.title = intent.getStringExtra("categoryName")
 
         val categoryId: String? = intent.getStringExtra("categoryId")
-        val viewModel = ViewModelProvider(this).get(WalmartViewModel::class.java)
 
-        val adapter = RvAdapter()
         recyclerView.layoutManager = manager
         recyclerView.adapter = adapter
+
         viewModel.getCategoryListData(categoryId)
         viewModel.categoryListData.observe(this, Observer {
             shimmer_view_container.stopShimmerAnimation()
@@ -49,14 +56,6 @@ class CategoryListActivity : MenuActivity() {
 
             adapter.updateData(it.items)
         })
-
-//        viewModel.categoryListDataPagination.observe(this, Observer {
-//            Log.d("Pagination", "Observe Pagination$it")
-//            adapter.updateData(it.items)
-//            isLoading = true
-//
-//        })
-
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -76,8 +75,7 @@ class CategoryListActivity : MenuActivity() {
                 Log.d("Pagination", "Cat Id:- $categoryId")
                 if (dy > 0) {
                     Log.d("Pagination", "Scrolled")
-                    viewModel.categoryListData.value?.nextPage
-                    if (isLoading && (visibleItemCount + scrollOut == totalItemCount)) {
+                    if (isLoading && (visibleItemCount + scrollOut == totalItemCount - BUFFER_COUNT)) {
                         progressBar.visibility = View.VISIBLE
                         isLoading = false
                         viewModel.getCategoryListDataPagination(
@@ -93,13 +91,20 @@ class CategoryListActivity : MenuActivity() {
     }
 
     override fun onResume() {
-        if (!flag)
+        if (!flag) {
+            shimmer_view_container.visibility = View.GONE
             shimmer_view_container.startShimmerAnimation()
+        }
         super.onResume()
     }
 
     override fun onPause() {
-        shimmer_view_container.stopShimmerAnimation()
+        shimmer_view_container.apply {
+            stopShimmerAnimation()
+            visibility = View.GONE
+        }
         super.onPause()
     }
+
+
 }

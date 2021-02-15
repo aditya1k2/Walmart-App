@@ -1,26 +1,29 @@
 package com.example.walmart.ui.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.walmart.data.db.entities.PastOrder
 import com.example.walmart.data.db.entities.ProductTable
 import com.example.walmart.data.repository.WalmartRepository
 import com.example.walmart.domain.CartUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class CartViewModel : ViewModel() {
 
     private val cartUseCase = CartUseCase()
+    private val repository = WalmartRepository()
     fun getCartDetails(): LiveData<List<ProductTable>> {
         return cartUseCase.getCartDetails()
     }
 
-    fun deleteProduct(product: ProductTable, application: Application) = viewModelScope.launch {
+    fun deleteProduct(product: ProductTable) = viewModelScope.launch {
         cartUseCase.delete(product)
+    }
+
+
+    fun insertOrder(product: PastOrder) = viewModelScope.launch {
+        repository.insertOrder(product)
     }
 
 

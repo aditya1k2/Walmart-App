@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.Walmart">
-        <activity android:name=".ui.screens.CartActivity"></activity>
+        <activity android:name=".ui.screens.PastOrdersActivity"></activity>
+        <activity android:name=".ui.screens.CartActivity" />
         <activity android:name=".ui.screens.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.screens.ItemDetailActivity" />
-        <activity android:name=".ui.screens.CategoryListActivity"></activity>
+        <activity android:name=".ui.screens.CategoryListActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,27 +17,27 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/productThumbnail"
+            android:id="@+id/productThumbnailPastOrders"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/relativeLayout"
+            app:layout_constraintEnd_toStartOf="@id/relativeLayoutPastOrders"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/ic_launcher_foreground" />
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/relativeLayoutPastOrders"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/productThumbnail"
+            app:layout_constraintStart_toEndOf="@id/productThumbnailPastOrders"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/productName"
+                android:id="@+id/productNamePastOrders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="2dp"
@@ -44,28 +45,28 @@
                 tools:text="Product Name" />
 
             <TextView
-                android:id="@+id/brandName"
+                android:id="@+id/brandNamePastOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/productName"
+                android:layout_below="@id/productNamePastOrders"
                 android:padding="2dp"
                 android:textSize="12sp"
                 tools:text="by Adidas" />
 
             <RatingBar
-                android:id="@+id/ratingBarCategoryList"
+                android:id="@+id/ratingBarCategoryListPastOrder"
                 style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/brandName"
+                android:layout_below="@id/brandNamePastOrder"
                 android:numStars="5"
                 android:rating="1" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/pricePastOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ratingBarCategoryList"
+                android:layout_below="@id/ratingBarCategoryListPastOrder"
                 android:padding="2dp"
                 android:textStyle="bold"
                 tools:text="100$" />

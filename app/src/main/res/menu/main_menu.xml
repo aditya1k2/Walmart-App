@@ -5,10 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/cart"
-        app:actionLayout="@layout/cart_icon"
-        android:title="cart"
+        android:id="@+id/order"
+        android:icon="@drawable/ic_baseline_shopping_bag_24"
+        android:title="order"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/cart"
+        android:title="cart"
+        app:actionLayout="@layout/cart_icon"
+        app:showAsAction="always" />
+
+
 </menu>
 
 

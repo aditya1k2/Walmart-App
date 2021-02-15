@@ -1,11 +1,8 @@
 package com.example.walmart.domain
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import com.example.walmart.model.Items
 import com.example.walmart.data.repository.WalmartRepository
 import com.example.walmart.model.CategoryListData
-import com.facebook.shimmer.ShimmerFrameLayout
 
 class GetCategoryListDataUseCase {
     private val repository = WalmartRepository()
@@ -17,11 +14,15 @@ class GetCategoryListDataUseCase {
     suspend fun callApiForCategoryListDataPagination(
         catId: String?,
         lastDoc: String?,
-        remainingHits:String?
+        remainingHits: String?
     ): CategoryListData {
         Log.d("Pagination", "GetCategoryListDataUseCase")
 
-        return repository.callApiForCategoryListDataPagination(catId, lastDoc,remainingHits)
+        return repository.callApiForCategoryListDataPagination(
+            catId,
+            lastDoc,
+            remainingHits
+        )
     }
 
 }

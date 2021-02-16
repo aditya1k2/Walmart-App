@@ -39,7 +39,7 @@ class ItemViewHolderCategoryList(itemView: View) : RecyclerView.ViewHolder(itemV
             ratingBar.rating = item.customerRating
 
         itemView.setOnClickListener {
-            Toast.makeText(itemView.context, "Clicked ", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(itemView.context, "Clicked ", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(itemView.context, ItemDetailActivity::class.java)
             intent.putExtra("short description", item.shortDescription)

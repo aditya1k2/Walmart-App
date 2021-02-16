@@ -23,7 +23,6 @@ class ItemViewHolderMainCategoryHome(itemView: View) : ItemBaseViewHolderHome(it
 
             itemView.context.startActivity(intent)
         }
-
     }
 
 }

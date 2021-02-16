@@ -16,6 +16,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_view_cart" />
 
+    <TextView
+        android:id="@+id/cartEmptyTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cart_is_empty"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/cartRelativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/cartRelativeLayout"
         android:layout_width="match_parent"

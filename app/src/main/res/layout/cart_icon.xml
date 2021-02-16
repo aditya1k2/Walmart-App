@@ -19,21 +19,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/cart_icon_counter_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="2dp"
-        android:background="@drawable/round_corner"
-        android:paddingStart="2dp"
-        android:paddingEnd="2dp"
-        android:text="2"
-        android:textColor="@color/white"
-        android:textSize="8sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="8" />
+<!--    <TextView-->
+<!--        android:id="@+id/cart_icon_counter_toolbar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="4dp"-->
+<!--        android:layout_marginLeft="4dp"-->
+<!--        android:layout_marginTop="2dp"-->
+<!--        android:background="@drawable/round_corner"-->
+<!--        android:paddingStart="2dp"-->
+<!--        android:paddingEnd="2dp"-->
+<!--        android:text="2"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="8sp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:text="8" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

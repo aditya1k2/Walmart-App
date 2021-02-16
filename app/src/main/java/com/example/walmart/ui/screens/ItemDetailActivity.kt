@@ -52,7 +52,7 @@ class ItemDetailActivity : MenuActivity() {
         productName.text = productNameDetailActivity
 
         addToCart.setOnClickListener {
-            cart_icon_counter_toolbar.visibility = View.VISIBLE
+//            cart_icon_counter_toolbar.visibility = View.VISIBLE
 
             viewModel.insertProduct(
                 ProductTable(
@@ -77,9 +77,13 @@ class ItemDetailActivity : MenuActivity() {
                 )
             )
             WalmartModule.notification(this, "1")
+
             val intent = Intent(this, PastOrdersActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            finish()
             startActivity(intent)
-            Toast.makeText(this, "Item Purchased", Toast.LENGTH_SHORT).show()
+
+//            Toast.makeText(this, "Item Purchased", Toast.LENGTH_SHORT).show()
         }
     }
 }

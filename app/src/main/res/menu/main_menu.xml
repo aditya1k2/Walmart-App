@@ -11,9 +11,10 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/cart"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="cart"
-        app:actionLayout="@layout/cart_icon"
         app:showAsAction="always" />
+    <!--    app:actionLayout="@layout/cart_icon"-->
 
 
 </menu>

@@ -42,6 +42,7 @@ class CartActivity : AppCompatActivity(), RvCartAdapter.IRvCartAdapter {
             adapter.update(it)
             if (cartData.value?.size == 0) {
                 cartRelativeLayout.visibility = View.GONE
+                cartEmptyTv.visibility = View.VISIBLE
             } else {
 
                 var cartSum = 0.0
@@ -51,6 +52,8 @@ class CartActivity : AppCompatActivity(), RvCartAdapter.IRvCartAdapter {
 
                 cartSum = (cartSum * 100.0).roundToInt() / 100.0
                 cartRelativeLayout.visibility = View.VISIBLE
+                cartEmptyTv.visibility = View.GONE
+
                 cartTotalValue.text = cartSum.toString().plus(" $")
 
             }

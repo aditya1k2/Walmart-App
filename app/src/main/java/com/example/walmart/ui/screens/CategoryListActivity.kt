@@ -1,9 +1,14 @@
 package com.example.walmart.ui.screens
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.walmart.R
 import com.example.walmart.ui.adapter.RvCategoryListAdapter
 import com.example.walmart.ui.viewmodel.CategoryListViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_category_list.*
+
 
 class CategoryListActivity : MenuActivity() {
     private val viewModel by lazy {
@@ -74,16 +81,28 @@ class CategoryListActivity : MenuActivity() {
 
                 Log.d("Pagination", "Cat Id:- $categoryId")
                 if (dy > 0) {
-                    Log.d("Pagination", "Scrolled")
-                    if (isLoading && (visibleItemCount + scrollOut == totalItemCount - BUFFER_COUNT)) {
-                        progressBar.visibility = View.VISIBLE
-                        isLoading = false
-                        viewModel.getCategoryListDataPagination(
-                            categoryId,
-                            lastDoc,
-                            remainingHits
-                        )
+                    if (isNetworkAvailable(this@CategoryListActivity)) {
+                        Log.d("Pagination", "Scrolled")
+                        if (isLoading && (visibleItemCount + scrollOut == totalItemCount - BUFFER_COUNT)) {
+
+                            progressBar.visibility = View.VISIBLE
+                            isLoading = false
+                            viewModel.getCategoryListDataPagination(
+                                categoryId,
+                                lastDoc,
+                                remainingHits
+                            )
+
+                        }
+
+                    } else {
+//                            Snackbar.make(this@CategoryListActivity,"Retry",Snackbar.LENGTH_SHORT)
+//                        Toast.makeText(this@CategoryListActivity, "Retry", Toast.LENGTH_SHORT)
+//                            .show()
+                        Log.d("Network", "Retry")
                     }
+
+
                 }
             }
         })
@@ -92,7 +111,7 @@ class CategoryListActivity : MenuActivity() {
 
     override fun onResume() {
         if (!flag) {
-            shimmer_view_container.visibility = View.GONE
+            shimmer_view_container.visibility = View.VISIBLE
             shimmer_view_container.startShimmerAnimation()
         }
         super.onResume()
@@ -104,6 +123,35 @@ class CategoryListActivity : MenuActivity() {
             visibility = View.GONE
         }
         super.onPause()
+    }
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        if (context == null) return false
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                when {
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                        return true
+                    }
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                        return true
+                    }
+                    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                        return true
+                    }
+                }
+            }
+        } else {
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
+                return true
+            }
+        }
+        return false
     }
 
 

@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.walmart.domain.GetCategoryListDataUseCase
 import com.example.walmart.model.CategoryListData
+import com.example.walmart.module.WalmartModule
 import kotlinx.coroutines.launch
 
 class CategoryListViewModel : ViewModel() {
@@ -22,7 +22,8 @@ class CategoryListViewModel : ViewModel() {
 
     fun getCategoryListData(catId: String?) {
         viewModelScope.launch {
-            _categoryListData.value = GetCategoryListDataUseCase().getCategoryListData(catId)
+            _categoryListData.value =
+                WalmartModule.getCategoryListDataUseCase.getCategoryListData(catId)
         }
     }
 
@@ -33,7 +34,7 @@ class CategoryListViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             _categoryListData.value =
-                GetCategoryListDataUseCase().callApiForCategoryListDataPagination(
+                WalmartModule.getCategoryListDataUseCase.callApiForCategoryListDataPagination(
                     catId,
                     lastDoc,
                     remainingHits

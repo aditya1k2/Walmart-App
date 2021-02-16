@@ -1,17 +1,19 @@
 package com.example.walmart.data.DataSource
 
 import com.example.walmart.data.networkfactory.ApiInterface
-import com.example.walmart.data.networkfactory.RetrofitFactory
 import com.example.walmart.model.CategoryId
 import com.example.walmart.model.CategoryListData
 
-object WalmartDataSource {
+class WalmartDataSource(
+    private val apiInterface: ApiInterface
+) {
+
 
     suspend fun callApiForCategoryListData(
         catId: String?
     ): CategoryListData {
 
-        return RetrofitFactory().getRetrofit().create(ApiInterface::class.java)
+        return apiInterface
             .getCategoryListData(
                 "json",
                 catId,
@@ -28,8 +30,7 @@ object WalmartDataSource {
         remainingHits: String?
 
     ): CategoryListData {
-
-        return RetrofitFactory().getRetrofit().create(ApiInterface::class.java)
+        return apiInterface
             .getCategoryListData(
                 "json",
                 catId,
@@ -42,12 +43,8 @@ object WalmartDataSource {
 
 
     suspend fun callApiForCategoryList(): List<CategoryId> {
-        return RetrofitFactory()
-            .getRetrofit()
-            .create(ApiInterface::class.java)
+        return apiInterface
             .getCategory("json", "tcefd9shdkvmqnq2b6657ra8").categories
-
-
     }
 
 

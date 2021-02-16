@@ -4,8 +4,10 @@ import android.util.Log
 import com.example.walmart.data.repository.WalmartRepository
 import com.example.walmart.model.CategoryListData
 
-class GetCategoryListDataUseCase {
-    private val repository = WalmartRepository()
+class GetCategoryListDataUseCase(
+    private val repository: WalmartRepository
+) {
+
     suspend fun getCategoryListData(catId: String?): CategoryListData {
         Log.d("SwipeCheck", "In GetTrendingListData UseCase")
         return repository.callApiForCategoryListData(catId)

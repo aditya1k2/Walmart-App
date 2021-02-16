@@ -4,20 +4,24 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.walmart.data.DataSource.WalmartDataSource
 import com.example.walmart.data.db.ProductDatabase
+import com.example.walmart.data.db.dao.ProductDao
 import com.example.walmart.data.db.entities.PastOrder
 import com.example.walmart.data.db.entities.ProductTable
 import com.example.walmart.model.CategoryId
 import com.example.walmart.model.CategoryListData
 import com.example.walmart.util.App
 
-class WalmartRepository {
+class WalmartRepository(
+    private val dataSource: WalmartDataSource,
+    private val productDao: ProductDao
+) {
 
-    private val productDao = ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
+//    private val productDao = ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
 
     suspend fun callApiForCategoryListData(
         catId: String?
     ): CategoryListData {
-        return WalmartDataSource.callApiForCategoryListData(catId)
+        return dataSource.callApiForCategoryListData(catId)
     }
 
     suspend fun callApiForCategoryListDataPagination(
@@ -27,7 +31,7 @@ class WalmartRepository {
     ): CategoryListData {
         Log.d("Pagination", "WalMartRepository")
 
-        return WalmartDataSource
+        return dataSource
             .callApiForCategoryListDataPagination(
                 catId,
                 lastDoc,
@@ -36,7 +40,7 @@ class WalmartRepository {
     }
 
     suspend fun callApiForCategoryList(): List<CategoryId> {
-        return WalmartDataSource.callApiForCategoryList()
+        return dataSource.callApiForCategoryList()
     }
 
 

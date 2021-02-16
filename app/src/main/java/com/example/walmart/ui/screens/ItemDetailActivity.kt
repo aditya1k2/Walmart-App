@@ -43,7 +43,7 @@ class ItemDetailActivity : MenuActivity() {
         brandNameItemDetail.text = "by ".plus(brandName)
         if (rating == 0f)
             ratingBarItemDetail.visibility = View.GONE
-        else{
+        else {
             ratingBarItemDetail.visibility = View.VISIBLE
             ratingBarItemDetail.rating = rating
         }
@@ -76,7 +76,7 @@ class ItemDetailActivity : MenuActivity() {
                     imageUrl
                 )
             )
-            WalmartModule.notification(this)
+            WalmartModule.notification(this, "1")
             val intent = Intent(this, PastOrdersActivity::class.java)
             startActivity(intent)
             Toast.makeText(this, "Item Purchased", Toast.LENGTH_SHORT).show()

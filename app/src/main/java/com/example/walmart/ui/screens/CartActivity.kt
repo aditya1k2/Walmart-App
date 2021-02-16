@@ -71,7 +71,7 @@ class CartActivity : AppCompatActivity(), RvCartAdapter.IRvCartAdapter {
                 )
                 viewModel.deleteProduct(itr)
 
-                WalmartModule.notification(this)
+                WalmartModule.notification(this,"2")
 
                 val intent = Intent(this, PastOrdersActivity::class.java)
                 startActivity(intent)

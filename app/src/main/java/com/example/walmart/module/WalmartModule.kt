@@ -10,7 +10,14 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.walmart.R
+import com.example.walmart.data.DataSource.WalmartDataSource
 import com.example.walmart.data.db.ProductDatabase
+import com.example.walmart.data.networkfactory.ApiInterface
+import com.example.walmart.data.repository.WalmartRepository
+import com.example.walmart.domain.CartUseCase
+import com.example.walmart.domain.GetCategoryListDataUseCase
+import com.example.walmart.domain.GetCategoryListUseCase
+import com.example.walmart.domain.PastOrderUseCase
 import com.example.walmart.ui.screens.PastOrdersActivity
 import com.example.walmart.util.App
 import com.squareup.moshi.Moshi
@@ -18,14 +25,14 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-object WalmartModule : Application() {
+object WalmartModule {
 
-
-    private val productDao = ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
-
+    private val productDao by lazy {
+        ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
+    }
     private val baseURL = "https://api.walmartlabs.com/"
-    private fun retrofit(): Retrofit {
-        return Retrofit.Builder()
+    private val apiInterface by lazy {
+        Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(
                 MoshiConverterFactory.create(
@@ -35,20 +42,38 @@ object WalmartModule : Application() {
                 )
             )
             .build()
+            .create(ApiInterface::class.java)
     }
 
-    val retrofitService by lazy {
-        retrofit()
+    private val dataSource by lazy {
+        WalmartDataSource(apiInterface)
     }
 
-//    fun getAppContext():Application{
-//        return baseContext
-//    }
+    val repository by lazy {
+        WalmartRepository(dataSource, productDao)
+    }
 
-    fun notification(context:Context) {
+    val cartUseCase by lazy {
+        CartUseCase(repository)
+    }
+
+    val getCategoryListUseCase by lazy {
+        GetCategoryListUseCase(repository)
+    }
+
+    val getCategoryListDataUseCase by lazy {
+        GetCategoryListDataUseCase(repository)
+    }
+
+    val pastOrderUseCase by lazy {
+        PastOrderUseCase(repository)
+    }
+
+
+    fun notification(context: Context, channel: String) {
         val notificationChannel: NotificationChannel =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationChannel("1", "Walmart", NotificationManager.IMPORTANCE_DEFAULT)
+                NotificationChannel(channel, "Walmart", NotificationManager.IMPORTANCE_DEFAULT)
             } else {
                 TODO("VERSION.SDK_INT < O")
             }
@@ -71,9 +96,9 @@ object WalmartModule : Application() {
         builder.setContentIntent(pendingIntent)
         builder.setContentTitle("Walmart")
         builder.setContentText("Item Purchased")
-        builder.setChannelId("1")
+        builder.setChannelId(channel)
 
         //triggering notification
-        notificationManagerCompat.notify(1, builder.build())
+        notificationManagerCompat.notify(channel.toInt(), builder.build())
     }
 }

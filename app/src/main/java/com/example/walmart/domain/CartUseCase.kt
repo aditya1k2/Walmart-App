@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import com.example.walmart.data.db.entities.ProductTable
 import com.example.walmart.data.repository.WalmartRepository
 
-class CartUseCase {
-    private val repository = WalmartRepository()
+class CartUseCase(
+   private val repository: WalmartRepository
+) {
+
     fun getCartDetails(): LiveData<List<ProductTable>> {
         return repository.getAllProduct()
     }

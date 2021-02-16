@@ -3,13 +3,17 @@ package com.example.walmart.model
 import com.squareup.moshi.Json
 
 data class RetroData(
-
     @Json(name = "time") val time: Long,
     @Json(name = "items") val items: List<Items>
 )
 
 
 data class CategoryListData(
+    @Json(name = "category") val category: String,
+    @Json(name = "nextPage") val nextPage: String,
+    @Json(name = "format") val format: String,
+    @Json(name = "totalPages") val totalPages: Int,
+    @Json(name = "nextPageExist") val nextPageExist: Boolean,
     @Json(name = "items") val items: List<Items>
 )
 

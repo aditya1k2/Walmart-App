@@ -16,16 +16,26 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_view_cart" />
 
+    <TextView
+        android:id="@+id/cartEmptyTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cart_is_empty"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/cartRelativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <RelativeLayout
         android:id="@+id/cartRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cartRecyclerView"
         android:background="#EDEBF6"
         android:elevation="10dp"
-        >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cartRecyclerView">
 
         <TextView
             android:id="@+id/cartTotal"
@@ -33,24 +43,32 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:padding="10dp"
-            android:text="Total:-"
+            android:text="@string/total"
             android:textSize="25sp"
             android:textStyle="bold"
-            tools:text="Total:- " />
+            tools:text="@string/total" />
 
         <TextView
             android:id="@+id/cartTotalValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_margin="20dp"
+            android:layout_toEndOf="@+id/cartTotal"
+            android:layout_toRightOf="@+id/cartTotal"
             android:padding="10dp"
             android:textSize="25sp"
             android:textStyle="bold"
             tools:text="100$" />
 
-
+        <Button
+            android:id="@+id/payNowButtonCart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="20dp"
+            android:layout_marginRight="-2dp"
+            android:text="@string/pay_now" />
     </RelativeLayout>
 
 

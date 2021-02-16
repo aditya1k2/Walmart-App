@@ -1,49 +1,67 @@
 package com.example.walmart.data.repository
 
-import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.walmart.data.DataSource.WalmartDataSource
 import com.example.walmart.data.db.ProductDatabase
+import com.example.walmart.data.db.dao.ProductDao
+import com.example.walmart.data.db.entities.PastOrder
 import com.example.walmart.data.db.entities.ProductTable
 import com.example.walmart.model.CategoryId
-import com.example.walmart.model.Items
+import com.example.walmart.model.CategoryListData
+import com.example.walmart.util.App
 
-class WalmartRepository {
+class WalmartRepository(
+    private val dataSource: WalmartDataSource,
+    private val productDao: ProductDao
+) {
 
-    private val dataSource = WalmartDataSource()
+//    private val productDao = ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
 
-    fun callApiForTrendingData(): LiveData<List<Items>> {
-        return dataSource.callApiForTrendingData()
-    }
-
-    fun callApiForCategoryListData(
+    suspend fun callApiForCategoryListData(
         catId: String?
-    ): LiveData<List<Items>> {
+    ): CategoryListData {
         return dataSource.callApiForCategoryListData(catId)
     }
 
-    suspend fun callApiForCategoryList(): LiveData<List<CategoryId>> {
+    suspend fun callApiForCategoryListDataPagination(
+        catId: String?,
+        lastDoc: String?,
+        remainingHits: String?
+    ): CategoryListData {
+        Log.d("Pagination", "WalMartRepository")
+
+        return dataSource
+            .callApiForCategoryListDataPagination(
+                catId,
+                lastDoc,
+                remainingHits
+            )
+    }
+
+    suspend fun callApiForCategoryList(): List<CategoryId> {
         return dataSource.callApiForCategoryList()
     }
 
-    //    fun getDatabase(application : Application){
-//        val dao = ProductDatabase.getDatabase(application).getProductDao()
-//    }
 
-    suspend fun insert(product: ProductTable, application: Application) {
-        val productDao = ProductDatabase.getDatabase(application).getProductDao()
+    suspend fun insert(product: ProductTable) {
         productDao.insert(product)
     }
 
-    suspend fun delete(product: ProductTable, application: Application) {
-        val productDao = ProductDatabase.getDatabase(application).getProductDao()
+    suspend fun insertOrder(product: PastOrder) {
+        productDao.insertOrder(product)
+    }
+
+    suspend fun delete(product: ProductTable) {
         productDao.delete(product)
     }
 
-    fun getAllProduct(application: Application): LiveData<List<ProductTable>> {
-        val productDao = ProductDatabase.getDatabase(application).getProductDao()
+    fun getAllProduct(): LiveData<List<ProductTable>> {
         return productDao.getAllProduct()
     }
 
+    fun getPastOrders(): LiveData<List<PastOrder>> {
+        return productDao.getPastOrder()
+    }
 
 }

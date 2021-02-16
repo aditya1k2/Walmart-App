@@ -3,7 +3,6 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:shimmer="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -17,9 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
         >
-<!--        shimmer:duration="800"-->
 
         <!-- Adding 7 rows of placeholders -->
         <LinearLayout
@@ -50,11 +47,7 @@
         android:id="@+id/homeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#E7F0F4"
         tools:listitem="@layout/item_view_homerv" />
-
-    <!--    #E7F4E7-->
-<!--    android:background="#E7F0F4"-->
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

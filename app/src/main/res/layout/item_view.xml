@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardElevation="5dp"
+    android:layout_margin="5dp"
+    android:padding="15dp"
     app:cardCornerRadius="5dp"
-    >
+    app:cardElevation="5dp">
     <!--    android:background="@drawable/item_category_list"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,13 +54,12 @@
 
             <RatingBar
                 android:id="@+id/ratingBarCategoryList"
+                style="?android:attr/ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?android:attr/ratingBarStyleSmall"
-                android:numStars="5"
-                android:rating="1"
                 android:layout_below="@id/brandName"
-                />
+                android:numStars="5"
+                android:rating="1" />
 
             <TextView
                 android:id="@+id/price"

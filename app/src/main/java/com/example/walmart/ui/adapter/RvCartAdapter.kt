@@ -51,6 +51,7 @@ class RvCartAdapter(private val listener: IRvCartAdapter) :
     }
 
     interface IRvCartAdapter {
+
         fun onItemClicked(item: ProductTable)
     }
 }

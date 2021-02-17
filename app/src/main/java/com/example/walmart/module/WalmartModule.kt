@@ -30,7 +30,7 @@ object WalmartModule {
     private val productDao by lazy {
         ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
     }
-    private val baseURL = "https://api.walmartlabs.com/"
+    private const val baseURL = "https://api.walmartlabs.com/"
     private val apiInterface by lazy {
         Retrofit.Builder()
             .baseUrl(baseURL)
@@ -68,6 +68,8 @@ object WalmartModule {
     val pastOrderUseCase by lazy {
         PastOrderUseCase(repository)
     }
+
+    var cartCount =0
 
 
     fun notification(context: Context, channel: String) {

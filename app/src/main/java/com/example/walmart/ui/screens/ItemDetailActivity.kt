@@ -2,6 +2,7 @@ package com.example.walmart.ui.screens
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.View
 import android.widget.ImageView
@@ -44,6 +45,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
         productPrice.text = "$price".plus(" $")
         productDescription.text = intent.getStringExtra("short description")
+        productDescription.movementMethod = ScrollingMovementMethod()
 
         brandNameItemDetail.text = "by ".plus(brandName)
         if (rating == 0f)

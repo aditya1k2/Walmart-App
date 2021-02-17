@@ -64,4 +64,10 @@ class WalmartRepository(
         return productDao.getPastOrder()
     }
 
+    fun cartSize(): LiveData<Int>{
+        return productDao.cartSize()
+    }
+
+
+
 }

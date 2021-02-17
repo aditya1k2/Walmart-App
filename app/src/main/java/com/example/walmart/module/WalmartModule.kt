@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.walmart.R
 import com.example.walmart.data.DataSource.WalmartDataSource
 import com.example.walmart.data.db.ProductDatabase
@@ -30,7 +32,7 @@ object WalmartModule {
     private val productDao by lazy {
         ProductDatabase.getDatabase(App.getAppContext()).getProductDao()
     }
-    private val baseURL = "https://api.walmartlabs.com/"
+    private const val baseURL = "https://api.walmartlabs.com/"
     private val apiInterface by lazy {
         Retrofit.Builder()
             .baseUrl(baseURL)
@@ -68,6 +70,8 @@ object WalmartModule {
     val pastOrderUseCase by lazy {
         PastOrderUseCase(repository)
     }
+
+    var cartCount:LiveData<Int> = repository.cartSize()
 
 
     fun notification(context: Context, channel: String) {

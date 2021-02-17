@@ -24,5 +24,11 @@ class CartViewModel : ViewModel() {
         WalmartModule.repository.insertOrder(product)
     }
 
+    fun cartSize():LiveData<Int>{
+        return WalmartModule.cartUseCase.cartSize()
+    }
+
+
+
 
 }

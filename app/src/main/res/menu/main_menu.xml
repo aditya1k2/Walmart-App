@@ -13,8 +13,10 @@
         android:id="@+id/cart"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:title="cart"
+
         app:showAsAction="always" />
-    <!--    app:actionLayout="@layout/cart_icon"-->
+
+<!--    app:actionLayout="@layout/cart_icon"-->
 
 
 </menu>

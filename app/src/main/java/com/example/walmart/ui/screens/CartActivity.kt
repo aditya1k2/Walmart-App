@@ -46,17 +46,18 @@ class CartActivity : AppCompatActivity(), RvCartAdapter.IRvCartAdapter {
         val cartData: LiveData<List<ProductTable>> = viewModel.getCartDetails()
         cartData.observe(this, Observer {
             adapter.update(it)
-            WalmartModule.cartCount = cartData.value?.size!!
+
+
             if (cartData.value?.size == 0) {
                 cartRelativeLayout.visibility = View.GONE
                 cartEmptyTv.visibility = View.VISIBLE
-                WalmartModule.cartCount = 0
+
             } else {
                 var cartSum = 0.0
                 for (item in it) {
                     cartSum += item.productPrice
                 }
-                WalmartModule.cartCount = cartData.value?.size!!
+
                 cartSum = (cartSum * 100.0).roundToInt() / 100.0
                 cartRelativeLayout.visibility = View.VISIBLE
                 cartEmptyTv.visibility = View.GONE
@@ -95,7 +96,6 @@ class CartActivity : AppCompatActivity(), RvCartAdapter.IRvCartAdapter {
     }
 
     override fun onItemClicked(item: ProductTable) {
-        WalmartModule.cartCount--
         viewModel.deleteProduct(item)
     }
 

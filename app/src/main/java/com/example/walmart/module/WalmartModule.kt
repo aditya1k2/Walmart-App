@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.walmart.R
 import com.example.walmart.data.DataSource.WalmartDataSource
 import com.example.walmart.data.db.ProductDatabase
@@ -69,7 +71,7 @@ object WalmartModule {
         PastOrderUseCase(repository)
     }
 
-    var cartCount =0
+    var cartCount:LiveData<Int> = repository.cartSize()
 
 
     fun notification(context: Context, channel: String) {

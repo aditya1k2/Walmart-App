@@ -76,7 +76,7 @@ class HomeActivity : AppCompatActivity() {
         val pastOrder = view?.findViewById<ImageView>(R.id.past_order_custom_action_bar)
         pastOrder?.setOnClickListener {
             val intent = Intent(this, PastOrdersActivity::class.java)
-                startActivity(intent)
+            startActivity(intent)
         }
 
 
@@ -89,7 +89,15 @@ class HomeActivity : AppCompatActivity() {
 
         name?.text = "Walmart"
         backArrow?.visibility = View.GONE
-        cartCount?.text = WalmartModule.cartCount.toString()
+        WalmartModule.cartCount.observe(this, Observer {
+            if (it == 0) {
+                cartCount?.visibility = View.GONE
+            } else {
+                cartCount?.visibility = View.VISIBLE
+                cartCount?.text = WalmartModule.cartCount.value.toString()
+            }
+        })
+//        cartCount?.text = WalmartModule.cartCount.toString()
         return true
     }
 

@@ -16,5 +16,9 @@ class CartUseCase(
         repository.delete(product)
     }
 
+    fun cartSize() : LiveData<Int>{
+        return repository.cartSize()
+    }
+
 
 }

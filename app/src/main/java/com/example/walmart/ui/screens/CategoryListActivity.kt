@@ -183,8 +183,15 @@ class CategoryListActivity : AppCompatActivity() {
         }
 
         name?.text = intent.getStringExtra("categoryName")
-        cartCount?.text = WalmartModule.cartCount.toString()
-
+//        cartCount?.text = WalmartModule.cartCount.toString()
+        WalmartModule.cartCount.observe(this, Observer {
+            if (it == 0) {
+                cartCount?.visibility = View.GONE
+            } else {
+                cartCount?.visibility = View.VISIBLE
+                cartCount?.text = WalmartModule.cartCount.value.toString()
+            }
+        })
         backArrow?.setOnClickListener {
             onBackPressed()
         }

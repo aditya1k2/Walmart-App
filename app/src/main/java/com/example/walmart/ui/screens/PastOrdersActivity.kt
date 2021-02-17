@@ -74,7 +74,16 @@ class PastOrdersActivity : AppCompatActivity() {
 
         pastOrder?.visibility = View.GONE
 
-        cartCount?.text = WalmartModule.cartCount.toString()
+        WalmartModule.cartCount.observe(this, Observer {
+            if (it == 0) {
+                cartCount?.visibility = View.GONE
+            } else {
+                cartCount?.visibility = View.VISIBLE
+                cartCount?.text = WalmartModule.cartCount.value.toString()
+            }
+//            cartCount?.text = WalmartModule.cartCount.value.toString()
+        })
+//        cartCount?.text = WalmartModule.cartCount.toString()
         name?.text = "Past Orders"
 
         backArrow?.setOnClickListener {

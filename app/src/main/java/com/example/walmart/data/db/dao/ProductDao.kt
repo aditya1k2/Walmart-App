@@ -23,5 +23,6 @@ interface ProductDao {
     @Query("Select * from past_order_table order by id ASC")
     fun getPastOrder(): LiveData<List<PastOrder>>
 
-
+    @Query("SELECT COUNT(id) FROM product_table")
+    fun cartSize() : LiveData<Int>
 }

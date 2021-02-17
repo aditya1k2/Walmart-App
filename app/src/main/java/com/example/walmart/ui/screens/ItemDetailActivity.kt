@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.walmart.R
 import com.example.walmart.data.db.entities.PastOrder
@@ -106,11 +107,20 @@ class ItemDetailActivity : AppCompatActivity() {
         var c = WalmartModule.cartCount
         cartCount?.text = c.toString()
 
+        WalmartModule.cartCount.observe(this, Observer {
+            if (it == 0) {
+                cartCount?.visibility = View.GONE
+            } else {
+                cartCount?.visibility = View.VISIBLE
+                cartCount?.text = WalmartModule.cartCount.value.toString()
+            }
+//            cartCount?.text = WalmartModule.cartCount.value.toString()
+        })
 
         addToCart.setOnClickListener {
-            WalmartModule.cartCount++
-            c = WalmartModule.cartCount
-            cartCount?.text = c.toString()
+
+//            c = WalmartModule.cartCount
+//            cartCount?.text = c.toString()
             viewModel.insertProduct(
                 ProductTable(
                     productNameDetailActivity,

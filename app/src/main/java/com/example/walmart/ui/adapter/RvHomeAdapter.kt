@@ -1,21 +1,13 @@
 package com.example.walmart.ui.adapter
 
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.walmart.R
 import com.example.walmart.model.CategoryId
 import com.example.walmart.ui.adapter.viewholders.ItemBaseViewHolderHome
 import com.example.walmart.ui.adapter.viewholders.ItemViewHolderMainCategoryHome
 import com.example.walmart.ui.adapter.viewholders.ItemViewHolderSubCategoryHome
-import com.example.walmart.ui.screens.CategoryListActivity
-import java.lang.IllegalArgumentException
 
 class RvHomeAdapter :
     RecyclerView.Adapter<ItemBaseViewHolderHome>() {

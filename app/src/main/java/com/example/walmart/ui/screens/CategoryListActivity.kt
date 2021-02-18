@@ -1,35 +1,24 @@
 package com.example.walmart.ui.screens
 
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.ActionBar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.walmart.R
-import com.example.walmart.module.WalmartModule
 import com.example.walmart.ui.adapter.RvCategoryListAdapter
 import com.example.walmart.ui.viewmodel.CategoryListViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_category_list.*
-import kotlinx.android.synthetic.main.activity_item_detail.*
 
 
-class CategoryListActivity : AppCompatActivity() {
+class CategoryListActivity : MenuActivity() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(CategoryListViewModel::class.java)
     }
@@ -52,8 +41,10 @@ class CategoryListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_list)
 
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.title = intent.getStringExtra("categoryName")
+        isBackOn = true
+        isCartOn = true
+        isPastOrderOn = true
+        activityName = intent.getStringExtra("categoryName")
 
         val categoryId: String? = intent.getStringExtra("categoryId")
 
@@ -105,9 +96,6 @@ class CategoryListActivity : AppCompatActivity() {
                         }
 
                     } else {
-//                            Snackbar.make(this@CategoryListActivity,"Retry",Snackbar.LENGTH_SHORT)
-//                        Toast.makeText(this@CategoryListActivity, "Retry", Toast.LENGTH_SHORT)
-//                            .show()
                         Log.d("Network", "Retry")
                     }
 
@@ -115,7 +103,6 @@ class CategoryListActivity : AppCompatActivity() {
                 }
             }
         })
-
     }
 
     override fun onResume() {
@@ -161,45 +148,4 @@ class CategoryListActivity : AppCompatActivity() {
         }
         return false
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
-        supportActionBar?.setDisplayShowCustomEnabled(true)
-        supportActionBar?.setCustomView(R.layout.custom_action_bar_layout)
-        val view = supportActionBar?.customView
-        val backArrow = view?.findViewById<ImageView>(R.id.back_arrow_custom_action_bar)
-        val cartCount = view?.findViewById<TextView>(R.id.cart_icon_counter_custom_action_bar)
-        val name = view?.findViewById<TextView>(R.id.activity_name_custom_action_bar)
-        val cart = view?.findViewById<ConstraintLayout>(R.id.cart_custom_action_bar)
-        val pastOrder = view?.findViewById<ImageView>(R.id.past_order_custom_action_bar)
-        pastOrder?.setOnClickListener {
-            val intent = Intent(this, PastOrdersActivity::class.java)
-            startActivity(intent)
-        }
-
-        cart?.setOnClickListener {
-            val intent = Intent(this, CartActivity::class.java)
-            startActivity(intent)
-        }
-
-        name?.text = intent.getStringExtra("categoryName")
-//        cartCount?.text = WalmartModule.cartCount.toString()
-        WalmartModule.cartCount.observe(this, Observer {
-            if (it == 0) {
-                cartCount?.visibility = View.GONE
-            } else {
-                cartCount?.visibility = View.VISIBLE
-                cartCount?.text = WalmartModule.cartCount.value.toString()
-            }
-        })
-        backArrow?.setOnClickListener {
-            onBackPressed()
-        }
-        return true
-    }
-
-
-
-
-
 }

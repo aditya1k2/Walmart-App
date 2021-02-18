@@ -11,19 +11,13 @@ import kotlinx.coroutines.launch
 
 class CategoryListViewModel : ViewModel() {
 
-    //to do- use backing property
     private val _categoryListData = MutableLiveData<CategoryListData>()
     val categoryListData: LiveData<CategoryListData>
         get() = _categoryListData
 
-
-//    var categoryListDataPagination = MutableLiveData<CategoryListData>()
-
-
     fun getCategoryListData(catId: String?) {
         viewModelScope.launch {
-            _categoryListData.value =
-                WalmartModule.getCategoryListDataUseCase.getCategoryListData(catId)
+            _categoryListData.value = WalmartModule.getCategoryListDataUseCase.getCategoryListData(catId)
         }
     }
 

@@ -5,10 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.walmart.R
 import com.example.walmart.data.db.entities.PastOrder
-import com.example.walmart.data.db.entities.ProductTable
-import com.example.walmart.ui.adapter.viewholders.ItemViewHolderCart
 import com.example.walmart.ui.adapter.viewholders.ItemViewHolderPastOrders
-import java.util.ArrayList
+import java.util.*
 
 class RvPastOrdersAdapter : RecyclerView.Adapter<ItemViewHolderPastOrders>() {
 

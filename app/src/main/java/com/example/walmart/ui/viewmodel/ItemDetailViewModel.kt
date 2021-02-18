@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.walmart.data.db.entities.PastOrder
 import com.example.walmart.data.db.entities.ProductTable
-import com.example.walmart.data.repository.WalmartRepository
 import com.example.walmart.module.WalmartModule
 import kotlinx.coroutines.launch
 

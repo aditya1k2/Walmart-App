@@ -1,5 +1,7 @@
 package com.example.walmart.ui.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.walmart.data.db.entities.PastOrder
@@ -17,5 +19,7 @@ class ItemDetailViewModel : ViewModel() {
     fun insertOrder(product: PastOrder) = viewModelScope.launch {
         WalmartModule.repository.insertOrder(product)
     }
+
+
 
 }

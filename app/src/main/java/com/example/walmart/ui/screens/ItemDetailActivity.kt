@@ -13,9 +13,25 @@ import com.example.walmart.ui.viewmodel.ItemDetailViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_item_detail.*
 
-class ItemDetailActivity : MenuActivity() {
+class ItemDetailActivity : BaseToolBarActivity() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(ItemDetailViewModel::class.java)
+    }
+
+    override fun isCartOn(): Boolean {
+        return true
+    }
+
+    override fun isPastOrderOn(): Boolean {
+        return true
+    }
+
+    override fun isBackOn(): Boolean {
+        return true
+    }
+
+    override fun activityName(): String? {
+        return resources.getString(R.string.product_detail)
     }
 
 
@@ -24,21 +40,19 @@ class ItemDetailActivity : MenuActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_detail)
 
-        isCartOn = true
-        isPastOrderOn = true
-        isBackOn = true
-        activityName = "Product Detail"
-
         val price = intent.getDoubleExtra("productPrice", 0.0)
         val brandName = intent.getStringExtra("brandName")
         val rating = intent.getFloatExtra("productRating", 0f)
         val imageUrl = intent.getStringExtra("imageUrl")
         val productNameDetailActivity: String? = intent.getStringExtra("productName")
 
-        Picasso.get().load(imageUrl).placeholder(R.drawable.ic_launcher_foreground)
+        Picasso
+            .get()
+            .load(imageUrl)
+            .placeholder(R.drawable.ic_launcher_foreground)
             .into(productImage)
 
-        productPrice.text = "$price".plus(" $")
+        productPrice.text = resources.getString(R.string.product_price, price)
         productDescription.text = intent.getStringExtra("short description")
         productDescription.movementMethod = ScrollingMovementMethod()
 
@@ -49,6 +63,7 @@ class ItemDetailActivity : MenuActivity() {
             ratingBarItemDetail.visibility = View.VISIBLE
             ratingBarItemDetail.rating = rating
         }
+
 
 
         productName.text = productNameDetailActivity
@@ -63,7 +78,11 @@ class ItemDetailActivity : MenuActivity() {
                     imageUrl
                 )
             )
-            WalmartModule.notification(this, "1")
+            WalmartModule.notification(
+                context = this,
+                channel = "1",
+                msg = "Item Purchased"
+            )
             val intent = Intent(this, PastOrdersActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
@@ -71,14 +90,13 @@ class ItemDetailActivity : MenuActivity() {
         }
 
         addToCart.setOnClickListener {
-
             viewModel.insertProduct(
                 ProductTable(
-                    productNameDetailActivity,
-                    price,
-                    brandName,
-                    rating,
-                    imageUrl
+                    productName = productNameDetailActivity,
+                    productPrice = price,
+                    brand = brandName,
+                    rating = rating,
+                    imageUrl = imageUrl
                 )
             )
         }

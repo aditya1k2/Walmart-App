@@ -18,7 +18,7 @@ import com.example.walmart.ui.viewmodel.CategoryListViewModel
 import kotlinx.android.synthetic.main.activity_category_list.*
 
 
-class CategoryListActivity : MenuActivity() {
+class CategoryListActivity : BaseToolBarActivity() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(CategoryListViewModel::class.java)
     }
@@ -41,11 +41,6 @@ class CategoryListActivity : MenuActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category_list)
 
-        isBackOn = true
-        isCartOn = true
-        isPastOrderOn = true
-        activityName = intent.getStringExtra("categoryName")
-
         val categoryId: String? = intent.getStringExtra("categoryId")
 
         recyclerView.layoutManager = manager
@@ -63,6 +58,7 @@ class CategoryListActivity : MenuActivity() {
 
             adapter.updateData(it.items)
         })
+
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -111,6 +107,22 @@ class CategoryListActivity : MenuActivity() {
             shimmer_view_container.startShimmerAnimation()
         }
         super.onResume()
+    }
+
+    override fun isCartOn(): Boolean {
+        return true
+    }
+
+    override fun isPastOrderOn(): Boolean {
+        return true
+    }
+
+    override fun isBackOn(): Boolean {
+        return true
+    }
+
+    override fun activityName(): String? {
+        return intent.getStringExtra("categoryName")
     }
 
     override fun onPause() {

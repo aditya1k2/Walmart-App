@@ -17,20 +17,31 @@ import com.example.walmart.ui.viewmodel.CartViewModel
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlin.math.roundToInt
 
-class CartActivity : MenuActivity(), RvCartAdapter.IRvCartAdapter {
+class CartActivity : BaseToolBarActivity(), RvCartAdapter.IRvCartAdapter {
     private val viewModel by lazy {
         ViewModelProvider(this).get(CartViewModel::class.java)
     }
 
+    override fun isCartOn(): Boolean {
+        return false
+    }
+
+    override fun isPastOrderOn(): Boolean {
+        return true
+    }
+
+    override fun isBackOn(): Boolean {
+        return true
+    }
+
+    override fun activityName(): String {
+        return "Cart"
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
-
-        isBackOn = true
-        isCartOn = false
-        isPastOrderOn = true
-        activityName = "Cart"
-
 
         val adapter = RvCartAdapter(this)
         cartRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -40,7 +51,6 @@ class CartActivity : MenuActivity(), RvCartAdapter.IRvCartAdapter {
         val cartData: LiveData<List<ProductTable>> = viewModel.getCartDetails()
         cartData.observe(this, Observer {
             adapter.update(it)
-
 
             if (cartData.value?.size == 0) {
                 cartRelativeLayout.visibility = View.GONE
@@ -55,13 +65,14 @@ class CartActivity : MenuActivity(), RvCartAdapter.IRvCartAdapter {
                 cartSum = (cartSum * 100.0).roundToInt() / 100.0
                 cartRelativeLayout.visibility = View.VISIBLE
                 cartEmptyTv.visibility = View.GONE
-
                 cartTotalValue.text = cartSum.toString().plus(" $")
 
             }
 
             Log.d("Cart Count", cartData.value?.size.toString())
         })
+
+
 
         payNowButtonCart.setOnClickListener {
             for (itr in cartData.value!!) {
@@ -75,13 +86,15 @@ class CartActivity : MenuActivity(), RvCartAdapter.IRvCartAdapter {
                     )
                 )
                 viewModel.deleteProduct(itr)
-
-                WalmartModule.notification(this, "2")
-
-                val intent = Intent(this, PastOrdersActivity::class.java)
-                finish()
-                startActivity(intent)
             }
+            WalmartModule.notification(
+                context = this,
+                channel = "2",
+                msg = "Item Purchesed From Cart"
+            )
+            val intent = Intent(this, PastOrdersActivity::class.java)
+            finish()
+            startActivity(intent)
         }
     }
 

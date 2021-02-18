@@ -14,10 +14,7 @@ import com.example.walmart.data.DataSource.WalmartDataSource
 import com.example.walmart.data.db.ProductDatabase
 import com.example.walmart.data.networkfactory.ApiInterface
 import com.example.walmart.data.repository.WalmartRepository
-import com.example.walmart.domain.CartUseCase
-import com.example.walmart.domain.GetCategoryListDataUseCase
-import com.example.walmart.domain.GetCategoryListUseCase
-import com.example.walmart.domain.PastOrderUseCase
+import com.example.walmart.domain.*
 import com.example.walmart.ui.screens.PastOrdersActivity
 import com.example.walmart.util.App
 import com.squareup.moshi.Moshi
@@ -53,6 +50,7 @@ object WalmartModule {
         WalmartRepository(dataSource, productDao)
     }
 
+
     val cartUseCase by lazy {
         CartUseCase(repository)
     }
@@ -65,14 +63,18 @@ object WalmartModule {
         GetCategoryListDataUseCase(repository)
     }
 
+    val getBaseToolBarActivityUseCase by lazy {
+        BaseToolBarActivityUseCase(repository)
+    }
+
     val pastOrderUseCase by lazy {
         PastOrderUseCase(repository)
     }
 
-    val cartCount:LiveData<Int> = repository.cartSize()
+    val cartCount: LiveData<Int> = repository.cartSize()
 
 
-    fun notification(context: Context, channel: String) {
+    fun notification(context: Context, channel: String,msg:String) {
         val notificationChannel: NotificationChannel =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel(channel, "Walmart", NotificationManager.IMPORTANCE_DEFAULT)
@@ -97,7 +99,7 @@ object WalmartModule {
         builder.setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
         builder.setContentIntent(pendingIntent)
         builder.setContentTitle("Walmart")
-        builder.setContentText("Item Purchased")
+        builder.setContentText(msg)
         builder.setChannelId(channel)
 
         //triggering notification

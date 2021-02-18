@@ -10,7 +10,7 @@ import com.example.walmart.ui.adapter.RvHomeAdapter
 import com.example.walmart.ui.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : MenuActivity() {
+class HomeActivity : BaseToolBarActivity() {
     private var flag: Boolean = false
 
     private val homeViewModel by lazy {
@@ -23,11 +23,6 @@ class HomeActivity : MenuActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        isCartOn = true
-        isPastOrderOn = true
-        isBackOn = false
-        activityName = "Walmart"
-
         homeRecyclerView.layoutManager = LinearLayoutManager(this)
         homeRecyclerView.adapter = adapter
 
@@ -39,12 +34,30 @@ class HomeActivity : MenuActivity() {
             flag = true
             adapter.updateData(it)
         })
+
+
     }
 
     override fun onResume() {
         if (!flag)
             shimmer_view_container_home.startShimmerAnimation()
         super.onResume()
+    }
+
+    override fun isCartOn(): Boolean {
+        return true
+    }
+
+    override fun isPastOrderOn(): Boolean {
+        return true
+    }
+
+    override fun isBackOn(): Boolean {
+        return false
+    }
+
+    override fun activityName(): String? {
+        return "Walmart"
     }
 
     override fun onPause() {

@@ -10,4 +10,8 @@ class PastOrderViewModel : ViewModel() {
     fun getPastOrders(): LiveData<List<PastOrder>> {
         return WalmartModule.pastOrderUseCase.getPastOrders()
     }
+
+    fun cartSize():LiveData<Int>{
+        return WalmartModule.pastOrderUseCase.cartSize()
+    }
 }

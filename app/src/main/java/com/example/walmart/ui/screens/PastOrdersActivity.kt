@@ -12,19 +12,30 @@ import com.example.walmart.ui.adapter.RvPastOrdersAdapter
 import com.example.walmart.ui.viewmodel.PastOrderViewModel
 import kotlinx.android.synthetic.main.activity_past_orders.*
 
-class PastOrdersActivity : MenuActivity() {
+class PastOrdersActivity : BaseToolBarActivity() {
     private val viewModel by lazy {
         ViewModelProvider(this).get(PastOrderViewModel::class.java)
+    }
+
+    override fun isCartOn(): Boolean {
+        return true
+    }
+
+    override fun isPastOrderOn(): Boolean {
+        return false
+    }
+
+    override fun isBackOn(): Boolean {
+        return true
+    }
+
+    override fun activityName(): String? {
+        return "Past Orders"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_past_orders)
-
-        isCartOn = true
-        isPastOrderOn = false
-        isBackOn = true
-        activityName = "Past Orders"
 
         pastOrderRecycleView.layoutManager = LinearLayoutManager(this)
         val adapter = RvPastOrdersAdapter()
@@ -39,5 +50,6 @@ class PastOrdersActivity : MenuActivity() {
                 adapter.update(it)
             }
         })
+
     }
 }

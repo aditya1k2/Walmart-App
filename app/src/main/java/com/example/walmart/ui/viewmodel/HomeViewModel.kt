@@ -17,4 +17,5 @@ class HomeViewModel : ViewModel() {
     fun getCategoryList() = viewModelScope.launch {
         _categoryListData.value = WalmartModule.getCategoryListUseCase.getCategoryList()
     }
+
 }

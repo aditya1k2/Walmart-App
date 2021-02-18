@@ -23,13 +23,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:gravity="start"
         android:padding="5dp"
         android:textStyle="bold"
-        android:gravity="start"
-        app:layout_constraintHorizontal_bias="0"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/past_order_custom_action_bar"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/back_arrow_custom_action_bar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Walmart" />
@@ -66,6 +66,7 @@
             android:paddingEnd="2dp"
             android:textColor="@color/white"
             android:textSize="10sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="8" />

@@ -1,6 +1,7 @@
 package com.example.walmart.domain
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.example.walmart.data.repository.WalmartRepository
 import com.example.walmart.model.CategoryListData
 
@@ -25,6 +26,10 @@ class GetCategoryListDataUseCase(
             lastDoc,
             remainingHits
         )
+    }
+
+    fun cartSize() : LiveData<Int> {
+        return repository.cartSize()
     }
 
 }
